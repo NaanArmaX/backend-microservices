@@ -6,7 +6,7 @@ Este repositório contém um conjunto de microservices para um projeto de backen
 
 
 
-## Documentação da API
+## Documentação da API - Auth
 
 #### Registra User
 
@@ -46,7 +46,24 @@ Este repositório contém um conjunto de microservices para um projeto de backen
 | `Token` | `string` | **Obrigatório**. JWT de login |
 
 
+## Documentação da API - Pay
 
+#### Lista clientes
+
+```http
+  GET /stripe/clients
+```
+
+#### Logout
+
+```http
+  POST /stripe/clients
+```
+
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `email` | `string` | Email do cliente |
+| `name` | `string` | npme do cliente |
 
 
 
