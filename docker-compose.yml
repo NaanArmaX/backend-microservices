@@ -4,10 +4,10 @@ services:
   auth-service:
     build: ./auth-service
     ports:
-      - "3001:3000"
+      - "3001:3001"
     volumes:
-        - ./auth-service/src:/usr/src/app/src  
-        - /usr/src/app/node_modules
+      - ./auth-service/src:/usr/src/app/src  
+      - /usr/src/app/node_modules
     environment:
       - DATABASE_URL=${DATABASE_URL}
       - REDIS_URL=${REDIS_URL}
@@ -16,21 +16,23 @@ services:
       - db
       - redis
 
-#  payments-service:
-#    build: ./payments-service
-#    ports:
-#      - "3002:3000"
-#    depends_on:
-#      - db
+  pay-service:
+    build: ./pay-service
+    ports:
+      - "3002:3002"
+    volumes:
+      - ./pay-service/src:/usr/src/app/src  
+      - /usr/src/app/node_modules
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=${REDIS_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}  
+    depends_on:
+      - db
+      - redis
 
-#  resource-service:
-#    build: ./resource-service
-#    ports:
-#      - "3003:3000"
-#    depends_on:
-#      - db
 
- 
   db:
     image: postgres:15
     restart: always
