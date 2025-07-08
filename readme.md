@@ -63,8 +63,43 @@ Este repositório contém um conjunto de microservices para um projeto de backen
 | Parâmetro   | Tipo       | Descrição                           |
 | :---------- | :--------- | :---------------------------------- |
 | `email` | `string` | Email do cliente |
-| `name` | `string` | npme do cliente |
+| `name` | `string` | nome do cliente |
 
+
+## Documentação da API - Products
+
+###  Listar produtos
+
+```http
+  GET /products
+```
+###  Adicionar produtos
+
+```http
+  POST /products
+```
+
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `name` | `string` | nome do produto |
+| `price` | `int` | valro do produto |
+
+###  Atualizar produtos
+
+```http
+  PUT products/{id}
+```
+
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `name` | `string` | nome do produto |
+| `price` | `int` | valro do produto |
+
+###  Apagar produto
+
+```http
+  PUT products/{id}
+```
 
 
 ## Deploy
