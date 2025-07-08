@@ -151,7 +151,6 @@ app.post('/login', async (req, res) => {
       return res.status(400).json({ error: 'Usuário ou senha inválidos' });
     }
     const token = jwt.sign({ userId: user.id, username: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    console.log('[DEBUG /login] JWT gerado com chave:', process.env.JWT_SECRET);
     res.json({ token });
   } catch (error) {
     res.status(500).json({ error: 'Erro ao fazer login' });

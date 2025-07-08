@@ -24,12 +24,39 @@ services:
       - ./pay-service/src:/usr/src/app/src  
       - /usr/src/app/node_modules
     environment:
-      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_URL=${PAYMENTS_DATABASE_URL}
       - REDIS_URL=${REDIS_URL}
       - JWT_SECRET=${JWT_SECRET}
       - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}  
     depends_on:
       - db
+      - redis
+
+  resource-service:
+    build: ./resource-service
+    ports:
+      - "3003:3003"
+    volumes:
+      - ./resource-service/src:/usr/src/app/src  
+      - /usr/src/app/node_modules
+    environment:
+      - DATABASE_URL=${RESOURCE_DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET}
+    depends_on:
+      - db
+      - redis
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - JWT_SECRET=${JWT_SECRET}
+      - REDIS_URL=${REDIS_URL}
+    depends_on:
+      - auth-service
+      - pay-service
+      - resource-service
       - redis
 
 
@@ -42,6 +69,7 @@ services:
       POSTGRES_DB: auth_db
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d
 
   redis:
     image: redis:7
