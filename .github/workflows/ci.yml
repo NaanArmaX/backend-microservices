@@ -1,0 +1,57 @@
+name: CI - Microsserviços Node + Docker
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Instalar dependências (Auth Service)
+        run: |
+          cd auth-service
+          npm install
+
+      - name: Rodar testes (Auth Service)
+        run: |
+          cd auth-service
+          npm test
+
+      - name: Instalar dependências (Pay Service)
+        run: |
+          cd pay-service
+          npm install
+
+      - name: Rodar testes (Pay Service)
+        run: |
+          cd pay-service
+          npm test
+
+      - name: Instalar dependências (Resource Service)
+        run: |
+          cd resource-service
+          npm install
+
+      - name: Rodar testes (Resource Service)
+        run: |
+          cd resource-service
+          npm test
+
+      - name: Build das imagens Docker
+        run: |
+          docker build -t api-gateway ./api-gateway
+          docker build -t auth-service ./auth-service
+          docker build -t pay-service ./pay-service
+          docker build -t resource-service ./resource-service
