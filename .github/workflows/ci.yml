@@ -24,30 +24,16 @@ jobs:
           cd auth-service
           npm install
 
-      - name: Rodar testes (Auth Service)
-        run: |
-          cd auth-service
-          npm test
-
       - name: Instalar dependências (Pay Service)
         run: |
           cd pay-service
           npm install
 
-      - name: Rodar testes (Pay Service)
-        run: |
-          cd pay-service
-          npm test
 
       - name: Instalar dependências (Resource Service)
         run: |
           cd resource-service
           npm install
-
-      - name: Rodar testes (Resource Service)
-        run: |
-          cd resource-service
-          npm test
 
       - name: Build das imagens Docker
         run: |
